@@ -1,18 +1,19 @@
+
 mod contract {
     use starknet::ContractAddress;
     use starknet::get_caller_address;
-    use starknet::storage_access::StorageBase;
-    use starknet::storage_access::StorageMap;
-    use starknet::storage_access::StorageValue;
+    use starknet::storage_access::Storage;
+    use starknet::emit;
 
     #[storage]
     struct Storage {
-        owner: StorageValue<ContractAddress>,
-        balances: StorageMap<ContractAddress, u256>,
-        total_supply: StorageValue<u256>,
+        owner: Storage::Value<ContractAddress>,
+        balances: Storage::Map<ContractAddress, u256>,
+        total_supply: Storage::Value<u256>,
     }
 
     #[event]
+    #[derive(Drop, starknet::Event)]
     enum Event {
         Transfer: TransferEvent,
     }
@@ -25,38 +26,38 @@ mod contract {
     }
 
     #[constructor]
-    fn constructor(initial_supply: u256) {
+    fn constructor(ref self: Storage, initial_supply: u256) {
         let owner = get_caller_address();
-        storage.owner.write(owner);
-        storage.balances.write(owner, initial_supply);
-        storage.total_supply.write(initial_supply);
+        self.owner.write(owner);
+        self.balances.write(owner, initial_supply);
+        self.total_supply.write(initial_supply);
     }
 
     #[external]
-    fn transfer(to: ContractAddress, value: u256) {
+    fn transfer(ref self: Storage, to: ContractAddress, value: u256) {
         let caller = get_caller_address();
-        let from_balance = storage.balances.read(caller);
+        let from_balance = self.balances.read(caller);
         assert(from_balance >= value, 'Insufficient balance');
 
-        let to_balance = storage.balances.read(to);
-        storage.balances.write(caller, from_balance - value);
-        storage.balances.write(to, to_balance + value);
+        let to_balance = self.balances.read(to);
+        self.balances.write(caller, from_balance - value);
+        self.balances.write(to, to_balance + value);
 
         emit!(Event::Transfer(TransferEvent { from: caller, to, value }));
     }
 
     #[external]
-    fn balance_of(account: ContractAddress) -> u256 {
-        storage.balances.read(account)
+    fn balance_of(self: @Storage, account: ContractAddress) -> u256 {
+        self.balances.read(account)
     }
 
     #[external]
-    fn total_supply() -> u256 {
-        storage.total_supply.read()
+    fn total_supply(self: @Storage) -> u256 {
+        self.total_supply.read()
     }
 
     #[external]
-    fn owner() -> ContractAddress {
-        storage.owner.read()
+    fn owner(self: @Storage) -> ContractAddress {
+        self.owner.read()
     }
 }
