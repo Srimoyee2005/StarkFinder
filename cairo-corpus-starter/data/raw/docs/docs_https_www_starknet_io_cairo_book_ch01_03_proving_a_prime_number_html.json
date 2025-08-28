@@ -1,9 +1,0 @@
-{
-  "source": "docs",
-  "url": "https://www.starknet.io/cairo-book/ch01-03-proving-a-prime-number.html",
-  "blocks": [
-    "/// Checks if a number is prime\n///\n/// # Arguments\n///\n/// * `n` - The number to check\n///\n/// # Returns\n///\n/// * `true` if the number is prime\n/// * `false` if the number is not prime\nfn is_prime(n: u32) -> bool {\n    if n <= 1 {\n        return false;\n    }\n    if n == 2 {\n        return true;\n    }\n    if n % 2 == 0 {\n        return false;\n    }\n    let mut i = 3;\n    let mut is_prime = true;\n    loop {\n        if i * i > n {\n            break;\n        }\n        if n % i == 0 {\n            is_prime = false;\n            break;\n        }\n        i += 2;\n    }\n    is_prime\n}\n\n// Executable entry point\n#[executable]\nfn main(input: u32) -> bool {\n    is_prime(input)\n}\n",
-    "air_public_input.json",
-    "/// Checks if a number is prime\n///\n/// # Arguments\n///\n/// * `n` - The number to check\n///\n/// # Returns\n///\n/// * `true` if the number is prime\n/// * `false` if the number is not prime\nfn is_prime(n: u128) -> bool {\n    if n <= 1 {\n        return false;\n    }\n    if n == 2 {\n        return true;\n    }\n    if n % 2 == 0 {\n        return false;\n    }\n    let mut i = 3;\n    let mut is_prime = true;\n    loop {\n        if i * i > n {\n            break;\n        }\n        if n % i == 0 {\n            is_prime = false;\n            break;\n        }\n        i += 2;\n    }\n    is_prime\n}\n\n#[executable]\nfn main(input: u128) -> bool {\n    if input > 1000000 { // Arbitrary limit for demo purposes\n        panic!(\"Input too large, must be <= 1,000,000\");\n    }\n    is_prime(input)\n}\n"
-  ]
-}

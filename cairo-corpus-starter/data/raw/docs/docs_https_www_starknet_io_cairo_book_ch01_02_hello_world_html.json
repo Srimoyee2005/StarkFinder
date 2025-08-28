@@ -1,9 +1,0 @@
-{
-  "source": "docs",
-  "url": "https://www.starknet.io/cairo-book/ch01-02-hello-world.html",
-  "blocks": [
-    "mod hello_world;\n",
-    "#[executable]\nfn main() {\n    println!(\"Hello, World!\");\n}\n",
-    "fn main() {\n\n}\n"
-  ]
-}
