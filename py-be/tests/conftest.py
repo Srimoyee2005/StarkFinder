@@ -7,15 +7,20 @@ from sqlalchemy_utils import create_database, database_exists, drop_database
 
 from app.models.base import Base
 from app.services.base import get_db
+TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "sqlite:///./test.db")
 
 TEST_DATABASE_URL = os.getenv(
     "TEST_DATABASE_URL",
     "postgresql://postgres:Soham2003@localhost:5432/starkfinder_test",
 )
+os.environ["DATABASE_URL"] = TEST_DATABASE_URL
 
 
 engine = create_engine(TEST_DATABASE_URL)
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+engine = create_engine(TEST_DATABASE_URL, connect_args={
+                       "check_same_thread": False})
+TestingSessionLocal = sessionmaker(
+    autocommit=False, autoflush=False, bind=engine)
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -29,6 +34,12 @@ def setup_test_database():
     yield
 
     drop_database(TEST_DATABASE_URL)
+    Base.metadata.drop_all(bind=engine)
+    if TEST_DATABASE_URL.startswith("sqlite"):
+        try:
+            os.remove("test.db")
+        except FileNotFoundError:
+            pass
 
 
 @pytest.fixture()

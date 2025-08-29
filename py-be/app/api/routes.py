@@ -3,11 +3,12 @@
 from datetime import datetime
 
 from fastapi import Depends, FastAPI, HTTPException, status
-from pydantic import BaseModel, ConfigDict, constr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, constr, field_validator
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from ..models.base import init_db
+from ..models.deployed_contract import DeployedContract
 from ..models.generated_contract import GeneratedContract
 from ..models.user import User
 from ..services.base import get_db
@@ -92,6 +93,18 @@ class GeneratedContractRead(BaseModel):
     updated_at: datetime
 
 
+class DeployedContractRead(BaseModel):
+    """Schema returned for deployed contracts."""
+
+    model_config = ConfigDict(from_attributes=True, populate_by_name=True)
+
+    id: int
+    contract_name: str
+    contract_address: str
+    metadata: dict | None = Field(None, alias="contract_metadata")
+    deployed_at: datetime
+
+
 @app.post(
     "/generate",
     response_model=GeneratedContractRead,
@@ -149,3 +162,39 @@ def generate_contract(
     db.commit()
     db.refresh(contract)
     return contract
+
+
+@app.get(
+    "/deployed_contracts",
+    response_model=list[DeployedContractRead],
+    status_code=status.HTTP_200_OK,
+)
+def get_deployed_contracts(
+    name: str | None = None,
+    sort_by: str = "deployed_at",
+    order: str = "desc",
+    db: Session = Depends(get_db),
+) -> list[DeployedContract]:
+    """Retrieve deployed contracts with optional filtering and sorting."""
+
+    valid_sort = {
+        "deployed_at": DeployedContract.deployed_at,
+        "contract_name": DeployedContract.contract_name,
+    }
+    if sort_by not in valid_sort:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid sort_by field",
+        )
+
+    query = db.query(DeployedContract)
+    if name:
+        query = query.filter(DeployedContract.contract_name.ilike(f"%{name}%"))
+
+    sort_column = valid_sort[sort_by]
+    if order == "desc":
+        query = query.order_by(sort_column.desc())
+    else:
+        query = query.order_by(sort_column.asc())
+
+    return query.all()
