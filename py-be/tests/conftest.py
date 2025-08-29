@@ -1,11 +1,12 @@
 import os
 
 import pytest
-from app.models.base import Base
-from app.services.base import get_db
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import create_database, database_exists, drop_database
+
+from app.models.base import Base
+from app.services.base import get_db
 
 TEST_DATABASE_URL = os.getenv(
     "TEST_DATABASE_URL",
