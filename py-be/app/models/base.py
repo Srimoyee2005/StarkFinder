@@ -2,11 +2,13 @@
 
 import os
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine,Column, Integer, String
 from sqlalchemy.orm import declarative_base, sessionmaker
 
+
 DATABASE_URL = os.environ.get(
-    "DATABASE_URL", "postgresql://postgres:Soham2003@localhost:5432/starkfinder_test"
+    "DATABASE_URL" 
+      , "postgresql+psycopg2://postgres:test1234@localhost:5432/Starkfinder-test"
 )
 
 engine = create_engine(DATABASE_URL)
@@ -14,6 +16,17 @@ engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
+
+class User(Base):
+    """SQLAlchemy model for a registered user."""
+    
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, nullable=False, index=True)
+    email = Column(String, unique=True, nullable=False, index=True)
+    password = Column(String, nullable=False)
+
 
 
 def init_db() -> None:
