@@ -2,9 +2,11 @@
 
 from datetime import datetime
 
+
 from fastapi import Depends, HTTPException, status , APIRouter
 from typing import Annotated
 from pydantic import BaseModel, ConfigDict, Field, field_validator, constr
+
 
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
@@ -17,6 +19,24 @@ from ..models.base import User
 from ..services.base import get_db
 from app.core.security import get_current_user
 from app.db.crud import get_user
+
+
+
+
+# Placeholder for authentication - In a real application, this would involve
+# proper token validation (e.g., JWT, OAuth2) and user retrieval.
+# This is added solely to enable testing of unauthorized access.
+async def verify_token(
+    x_token: str = Header(
+        None
+    ),  # Changed to Header(None) to make it optional for FastAPI's validation
+):
+    if x_token is None or x_token != "fake-super-secret-token":
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+
+class UserCreate(BaseModel):
+    """Schema for incoming user registration data."""
 
 
 router = APIRouter()
@@ -163,7 +183,26 @@ def generate_contract(
 
 
 
+
+
+@router.get("/generated_contracts", response_model=list[GeneratedContractRead])
+def get_generated_contracts(
+    user_id: int | None = None,
+    skip: int = 0,
+    limit: int = 100,
+    db: Session = Depends(get_db),
+    token: str = Depends(verify_token),  # Added authentication dependency
+) -> list[GeneratedContract]:
+    """Retrieve a list of generated contracts, with optional filtering by user_id and pagination."""
+    query = db.query(GeneratedContract)
+    if user_id:
+        query = query.filter(GeneratedContract.user_id == user_id)
+    contracts = query.offset(skip).limit(limit).all()
+    return contracts
+
+
 @router.get(
+ main
     "/deployed_contracts",
     response_model=list[DeployedContractRead],
     status_code=status.HTTP_200_OK,

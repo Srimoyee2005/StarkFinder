@@ -1,12 +1,11 @@
 # Integration Tests
 
-This directory contains integration tests for the backend API endpoints.
+This directory contains integration tests for the backend API endpoints
 
 ## Test Structure
 
 - `generate_contract_test.rs` - Tests for the POST /generate endpoint
-- `test_config.rs` - Test configuration and database setup utilities
-- `mod.rs` - Test module organization
+- `common/mod.rs` - Shared test utilities and configuration
 
 ## Setup
 
@@ -104,7 +103,6 @@ The integration tests cover:
 
 - `create_test_server()` - Creates a test server with database connection
 - `create_test_user()` - Creates a test user for testing
-- `cleanup_test_data()` - Cleans up test data after each test
 
 ## Notes
 

@@ -18,7 +18,7 @@ def create_user(username: str = "alice", email: str = "alice@example.com") -> in
     return res.json()["id"]
 
 
-def test_generate_contract_success():
+def test_generate_contract_success(db_session):
     user_id = create_user()
 
     payload = {
@@ -39,13 +39,9 @@ def test_generate_contract_success():
     assert data["status"] == "generated"
 
     # Verify persistence
-    db = SessionLocal()
-    try:
-        contract = db.query(GeneratedContract).filter_by(id=data["id"]).first()
-        assert contract is not None
-        assert contract.contract_name == "MyToken"
-    finally:
-        db.close()
+    contract = db_session.query(GeneratedContract).filter_by(id=data["id"]).first()
+    assert contract is not None
+    assert contract.contract_name == "MyToken"
 
 
 def test_generate_contract_user_not_found():

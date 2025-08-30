@@ -2,8 +2,10 @@
 
 import os
 
+
 from sqlalchemy import create_engine,Column, Integer, String
 from sqlalchemy.orm import declarative_base, sessionmaker
+from dotenv import load_dotenv
 
 
 DATABASE_URL = os.environ.get(
@@ -11,8 +13,15 @@ DATABASE_URL = os.environ.get(
       , "postgresql+psycopg2://postgres:test1234@localhost:5432/Starkfinder-test"
 )
 
-engine = create_engine(DATABASE_URL)
 
+load_dotenv()
+
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable is not set.")
+
+engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()

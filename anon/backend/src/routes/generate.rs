@@ -59,7 +59,7 @@ pub async fn generate_contract(
     // For now, we'll create a placeholder implementation
 
     // Validate user exists
-    let user = sqlx::query!("SELECT id FROM users WHERE id = $1", req.user_id)
+    let user = sqlx::query!("SELECT id FROM users WHERE id = $1", req.user_id as i64)
         .fetch_optional(&pool)
         .await
         .map_err(|e| crate::libs::error::map_sqlx_error(&e))?;

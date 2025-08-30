@@ -1,8 +1,9 @@
-use crate::test_config::TestConfig;
+mod common;
 use axum::http::StatusCode;
 use axum_test::TestServer;
 use backend::libs::db::AppState;
 use backend::routes::health::{db_health, health};
+use common::TestConfig;
 use sqlx::PgPool;
 
 async fn create_test_app(pool: PgPool) -> axum::Router {

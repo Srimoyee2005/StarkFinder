@@ -53,10 +53,6 @@ export default function Hero() {
         </div>
       </div>
       <div className="cta">
-        <button className="primary-button">
-          <img className="bg" src="/bg/button.png" alt="" />
-          Connect Wallet
-        </button>
         <button className="secondary-button flex w-full h-full items-center justify-center bg-white/20 backdrop-blur-lg border border-white/10 overflow-hidden  rounded-[24px]">
           Browse
         </button>

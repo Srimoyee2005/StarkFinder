@@ -22,25 +22,3 @@ impl TestConfig {
         Ok(pool)
     }
 }
-
-pub async fn setup_test_database() -> Result<PgPool, Box<dyn std::error::Error>> {
-    let config = TestConfig::from_env();
-    let pool = config.create_pool().await?;
-    Ok(pool)
-}
-
-pub async fn cleanup_test_database(pool: &PgPool) -> Result<(), sqlx::Error> {
-    // Clean up test data with cascade to handle foreign key constraints
-    sqlx::query!(
-        r#"
-        TRUNCATE TABLE
-            generated_contracts,
-            profiles,
-            users
-        RESTART IDENTITY CASCADE
-        "#
-    )
-    .execute(pool)
-    .await?;
-    Ok(())
-}

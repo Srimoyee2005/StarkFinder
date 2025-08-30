@@ -43,7 +43,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_DB: main_db
     ports:
       - "5432:5432"
     volumes:
@@ -75,6 +75,8 @@ services:
     environment:
       - RUST_LOG=info
       - PORT=8080
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/starkfinder_rust_test
+      - TEST_DATABASE_URL=postgresql://postgres:postgres@db:5432/starkfinder_rust_test
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
@@ -82,6 +84,17 @@ services:
       timeout: 10s
       retries: 3
       start_period: 10s
+
+  py-be-test:
+    build:
+      context: .
+      dockerfile: Dockerfile.py-be-test
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/starkfinder_py_test
+      - TEST_DATABASE_URL=postgresql://postgres:postgres@db:5432/starkfinder_py_test
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   db_data:

@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from fastapi.testclient import TestClient
 
 from app.api import routes
-from app.models.deployed_contract import DeployedContract
+from app.models.deployed_contracts import DeployedContract
 
 client = TestClient(routes.app)
 

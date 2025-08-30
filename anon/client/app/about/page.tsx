@@ -96,93 +96,95 @@ function TeamCard({ member }: { member: TeamMember }) {
 
 export default function AboutPage() {
   return (
-    <Navbar/>
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
-      {/* Hero Section */}
-      <section className="py-20 px-6 max-w-6xl mx-auto text-center">
-        <div className="mb-8">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-pulse">
-            Empowering the Decentralized Future
-          </h1>
-          <p className="text-lg md:text-xl mt-6 max-w-3xl mx-auto text-gray-300 leading-relaxed">
-            At Web3 Wallet Solutions, we&apos;re crafting secure, intuitive
-            wallets that bring crypto to everyone. Our team blends expertise in
-            blockchain, design, and engineering to build tools for
-            tomorrow&apos;s economy.
-          </p>
-        </div>
-      </section>
-
-      {/* Mission Content Section */}
-      {/* Mission Content Section */}
-      <section className="py-20 px-6 max-w-4xl mx-auto text-center">
-        <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-2xl p-12 border border-white/10">
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-500 to-blue-400 bg-clip-text text-transparent mb-6">
-            Our Mission
-          </h2>
-          <p className="text-gray-300 text-lg mb-6 max-w-2xl mx-auto leading-relaxed">
-            We believe that blockchain technology should be accessible to
-            everyone, not just technical experts. Our mission is to bridge the
-            gap between complex blockchain infrastructure and everyday users.
-          </p>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
-            Through intuitive design, robust security, and seamless user
-            experiences, we&apos;re building the tools that will power the next
-            generation of decentralized applications and financial systems.
-          </p>
-        </div>
-      </section>
-
-      {/* Team Grid */}
-      <section className="py-16 px-6 max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-            Meet Our Team
-          </h2>
-          <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
-            Our diverse team brings together expertise from blockchain
-            development, user experience design, and financial technology to
-            create innovative solutions.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {teamMembers.map((member) => (
-            <TeamCard key={member.id} member={member} />
-          ))}
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section className="py-20 px-6 max-w-4xl mx-auto text-center">
-        <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-2xl p-12 border border-white/10">
-          <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-500 to-blue-400 bg-clip-text text-transparent mb-6">
-            Ready to Join the Revolution?
-          </h2>
-          <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-            Whether you&apos;re a developer, designer, or crypto enthusiast, we&apos;d
-            love to hear from you. Let&apos;s build the future of decentralized
-            finance together.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/contact"
-              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-purple-600 hover:to-pink-600 rounded-xl shadow-lg text-white font-semibold transition-all duration-300 hover:scale-105"
-            >
-              Contact Us
-            </Link>
-            <Link
-              href="/careers"
-              className="inline-flex items-center px-8 py-4 border border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white rounded-xl transition-all duration-300"
-            >
-              View Careers
-            </Link>
+    <>
+      <Navbar/>
+      <main className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
+        {/* Hero Section */}
+        <section className="py-20 px-6 max-w-6xl mx-auto text-center">
+          <div className="mb-8">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-pulse">
+              Empowering the Decentralized Future
+            </h1>
+            <p className="text-lg md:text-xl mt-6 max-w-3xl mx-auto text-gray-300 leading-relaxed">
+              At Web3 Wallet Solutions, we&apos;re crafting secure, intuitive
+              wallets that bring crypto to everyone. Our team blends expertise in
+              blockchain, design, and engineering to build tools for
+              tomorrow&apos;s economy.
+            </p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Footer Navigation */}
-      <Footer/>
-    </main>
+        {/* Mission Content Section */}
+        {/* Mission Content Section */}
+        <section className="py-20 px-6 max-w-4xl mx-auto text-center">
+          <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-2xl p-12 border border-white/10">
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-500 to-blue-400 bg-clip-text text-transparent mb-6">
+              Our Mission
+            </h2>
+            <p className="text-gray-300 text-lg mb-6 max-w-2xl mx-auto leading-relaxed">
+              We believe that blockchain technology should be accessible to
+              everyone, not just technical experts. Our mission is to bridge the
+              gap between complex blockchain infrastructure and everyday users.
+            </p>
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto leading-relaxed">
+              Through intuitive design, robust security, and seamless user
+              experiences, we&apos;re building the tools that will power the next
+              generation of decentralized applications and financial systems.
+            </p>
+          </div>
+        </section>
+
+        {/* Team Grid */}
+        <section className="py-16 px-6 max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+              Meet Our Team
+            </h2>
+            <p className="text-gray-400 mt-4 max-w-2xl mx-auto">
+              Our diverse team brings together expertise from blockchain
+              development, user experience design, and financial technology to
+              create innovative solutions.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {teamMembers.map((member) => (
+              <TeamCard key={member.id} member={member} />
+            ))}
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section className="py-20 px-6 max-w-4xl mx-auto text-center">
+          <div className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-2xl p-12 border border-white/10">
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-500 to-blue-400 bg-clip-text text-transparent mb-6">
+              Ready to Join the Revolution?
+            </h2>
+            <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+              Whether you&apos;re a developer, designer, or crypto enthusiast, we&apos;d
+              love to hear from you. Let&apos;s build the future of decentralized
+              finance together.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/contact"
+                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-purple-600 hover:to-pink-600 rounded-xl shadow-lg text-white font-semibold transition-all duration-300 hover:scale-105"
+              >
+                Contact Us
+              </Link>
+              <Link
+                href="/careers"
+                className="inline-flex items-center px-8 py-4 border border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white rounded-xl transition-all duration-300"
+              >
+                View Careers
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer Navigation */}
+        <Footer/>
+      </main>
+    </>
   );
 }

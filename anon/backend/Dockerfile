@@ -2,6 +2,12 @@
 FROM rust:1.86-slim AS builder
 WORKDIR /app
 
+# Install curl in the builder stage
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+
+# Disable SQLx compile-time checks
+ENV SQLX_OFFLINE=true
+
 # Cache dependencies
 COPY Cargo.toml ./
 # Create a dummy main to cache deps
@@ -18,7 +24,7 @@ WORKDIR /app
 
 # Minimal runtime deps
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates wget \
+    && apt-get install -y --no-install-recommends ca-certificates wget curl \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /app/target/release/backend /usr/local/bin/app

@@ -55,7 +55,7 @@ pub async fn me(
     });
 
     Ok(Json(UserMeRes {
-        id: rec.id,
+        id: rec.id as i64,
         wallet: rec.wallet,
         created_at: rec.created_at,
         profile,
