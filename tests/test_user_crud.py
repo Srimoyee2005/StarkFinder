@@ -1,11 +1,12 @@
 import pytest
-from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.orm import sessionmaker, declarative_base, scoped_session
+from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy.orm import declarative_base, scoped_session, sessionmaker
 
 # -----------------------
 # Define User Model
 # -----------------------
 Base = declarative_base()
+
 
 class User(Base):
     __tablename__ = "users"
@@ -23,7 +24,9 @@ def engine():
     """
     Create an in-memory test database (use PostgreSQL test DB in production).
     """
-    engine = create_engine("sqlite:///:memory:", echo=False)  # for real PostgreSQL, replace URL
+    engine = create_engine(
+        "sqlite:///:memory:", echo=False
+    )  # for real PostgreSQL, replace URL
     Base.metadata.create_all(engine)
     yield engine
     Base.metadata.drop_all(engine)
@@ -51,6 +54,7 @@ def db_session(engine):
 # -----------------------
 # CRUD Tests
 # -----------------------
+
 
 def test_create_user(db_session):
     """Test Create operation"""
@@ -82,7 +86,9 @@ def test_update_user(db_session):
     db_session.add(user)
     db_session.commit()
 
-    user_to_update = db_session.query(User).filter_by(email="charlie@example.com").first()
+    user_to_update = (
+        db_session.query(User).filter_by(email="charlie@example.com").first()
+    )
     user_to_update.name = "Charlie Updated"
     db_session.commit()
 

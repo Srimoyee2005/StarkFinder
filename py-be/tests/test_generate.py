@@ -1,10 +1,9 @@
 """Tests for the POST /generate endpoint."""
 
-from fastapi.testclient import TestClient
-
 from app.api import routes
 from app.models.base import SessionLocal
 from app.models.generated_contract import GeneratedContract
+from fastapi.testclient import TestClient
 
 client = TestClient(routes.app)
 
