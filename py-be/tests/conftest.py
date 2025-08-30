@@ -7,6 +7,7 @@ from sqlalchemy_utils import create_database, database_exists, drop_database
 
 from app.models.base import Base
 from app.services.base import get_db
+
 TEST_DATABASE_URL = os.getenv("TEST_DATABASE_URL", "sqlite:///./test.db")
 
 TEST_DATABASE_URL = os.getenv(
@@ -17,10 +18,8 @@ os.environ["DATABASE_URL"] = TEST_DATABASE_URL
 
 
 engine = create_engine(TEST_DATABASE_URL)
-engine = create_engine(TEST_DATABASE_URL, connect_args={
-                       "check_same_thread": False})
-TestingSessionLocal = sessionmaker(
-    autocommit=False, autoflush=False, bind=engine)
+engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 @pytest.fixture(scope="session", autouse=True)
