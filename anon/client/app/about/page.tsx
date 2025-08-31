@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import Navbar from "../../components/navbar/navbar";
 import Footer from "../../components/footer/footer";
+
 export const metadata: Metadata = {
   title:
     "About Us - Web3 Wallet Solutions | Empowering the Decentralized Future",
